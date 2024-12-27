@@ -5,7 +5,7 @@ const { exec } = require('child_process');
 const { Builder, By, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 const socketIo = require('socket.io');
-const Records = require('./models/Record'); // Make sure this model exists
+const Records = require('./models/Record'); 
 const http = require('http');
 
 dotenv.config();
@@ -57,9 +57,18 @@ async function runScraper(io) {
         } catch (error) {
             await io.emit('log', 'No email field required, proceeding to password...');
         }
+
         const passwordField = await driver.wait(until.elementLocated(By.name("password")), 10000);
         await passwordField.sendKeys(process.env.TWITTER_PASSWORD, '\n');
         await io.emit('log', 'Entered password');
+
+        try {
+            const emailField = await driver.wait(until.elementLocated(By.name("text")), 5000);
+            await emailField.sendKeys(process.env.TWITTER_EMAIL, '\n');
+            await io.emit('log', 'Entered email (additional step)');
+        } catch (error) {
+            await io.emit('log', 'No email field required, proceeding to password...');
+        }
 
         // Wait for home page to load
         await driver.wait(until.urlContains("home"), 15000);
