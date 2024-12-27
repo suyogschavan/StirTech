@@ -18,7 +18,7 @@ app.get('/run-scrapper', async (req, res)=>{
     exec('node x_scrapper.js', async (error, stdout, stderr)=>{
         if(error){
             console.error(`Error executing script: ${error.message}`);
-            res.status(500).send("Automation script failed! ");
+            res.status(500).send("Automation script failed! ", error);
             return;
         }
         if (stderr) {
