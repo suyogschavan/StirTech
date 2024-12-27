@@ -89,6 +89,8 @@ async function runScraper(io) {
         // Step 1: Log in to X (formerly Twitter)
         await io.emit('log', 'Navigating to login page...');
         await driver.get('https://x.com/login');
+        await sleep(3000);
+        await io.emit('log', 'On login page ');
 
         // Enter username
         const usernameField = await driver.wait(until.elementLocated(By.xpath("/html/body/div/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/div[4]/label/div/div[2]/div/input")), 10000);
