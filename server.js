@@ -34,7 +34,9 @@ app.get('/run-scrapper', async (req, res)=>{
             await trends.save();
 
             console.log('Saved trends to MongoDB:', trends);
-            res.send('Trends saved to MongoDB successfully!');
+            // res.send('Trends saved to MongoDB successfully!');
+            return res.status(200).send('Trends saved to MongoDB successfully!');
+
         } catch (err) {
             console.error('Error saving to MongoDB:', err);
             res.status(500).send('Failed to save trends to MongoDB.');
