@@ -6,6 +6,9 @@ const chrome = require('selenium-webdriver/chrome')
 
 dotenv.config();
 
+const { promisify } = require('util');
+const sleep = promisify(setTimeout);
+
 async function scrollToBottom(driver) {
     await driver.executeScript("window.scrollTo(0, document.body.scrollHeight)");
     await driver.sleep(2000);  
@@ -25,21 +28,28 @@ async function scrollToBottom(driver) {
     try {
         // Step 1: Log in to X (formerly Twitter)
         await driver.get('https://x.com/login');
+        // console.log("On login page");
         
         // Enter username
         const usernameField = await driver.wait(until.elementLocated(By.name("text")), 10000);
         await usernameField.sendKeys(process.env.TWITTER_USERNAME, '\n');
+        // console.log("Username filled")
         
+        sleep(3000);
+
         // Enter password
         const passwordField = await driver.wait(until.elementLocated(By.name("password")), 10000);
         await passwordField.sendKeys(process.env.TWITTER_PASSWORD, '\n');
+        // console.log("Password filled");
         
         // Wait for home page to load
         await driver.wait(until.urlContains("home"), 15000);
-
+        // console.log("On home page");
+        
         // Step 2: Navigate to the trending topics page
         await driver.get('https://x.com/explore/tabs/trending');
         await scrollToBottom(driver);
+        // console.log("On trending page")
 
         // Step 3: Scrape trends
         const trendsText = [];
@@ -69,8 +79,9 @@ async function scrollToBottom(driver) {
         console.log(JSON.stringify(record));
     } catch (error) {
         console.error("An error occurred:", error);
-        process.exit(1); // Exit with error code to indicate failure
+        process.exit(1);
     } finally {
         await driver.quit();
     }
 })();
+
