@@ -2,6 +2,7 @@
 const { Builder, By, until } = require('selenium-webdriver');
 const dotenv = require('dotenv');
 const uuid = require('uuid');
+const chrome = require('selenium-webdriver/chrome')
 
 dotenv.config();
 
@@ -11,7 +12,16 @@ async function scrollToBottom(driver) {
 }
 
 (async () => {
-    const driver = await new Builder().forBrowser('chrome').build();
+    // const driver = await new Builder().forBrowser('chrome').build();
+
+    const options = new chrome.Options();
+    options.addArguments('--headless'); // Headless mode
+    options.addArguments('--no-sandbox'); // Disable sandboxing, necessary for running in some environments
+    options.addArguments('--disable-dev-shm-usage'); // Workaround for containerized environments
+
+    const driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build();
+
+
     try {
         // Step 1: Log in to X (formerly Twitter)
         await driver.get('https://x.com/login');
