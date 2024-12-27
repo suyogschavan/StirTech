@@ -104,12 +104,14 @@ async function runScraper(io) {
 
         // Output record as JSON
         await io.emit('log', 'Scraping complete, saving data...');
-        console.log(JSON.stringify(record));
+        // console.log(JSON.stringify(record));
 
         // Save to MongoDB
         const trends = new Records(record);
         await trends.save();
+        console.log(trends);
         await io.emit('log', 'Saved trends to MongoDB');
+        return trends;
 
     } catch (error) {
         await io.emit('log', `An error occurred: ${error.message}`);
@@ -124,8 +126,8 @@ app.get('/run-scrapper', async (req, res) => {
     // Emit log message to client
     io.emit('log', 'Starting the scraper...');
     try {
-        await runScraper(io);
-        res.status(200).send('Scraper completed successfully!');
+        const data = await runScraper(io);
+        res.status(200).send(data);
     } catch (err) {
         res.status(500).send('Failed to run scraper.');
     }

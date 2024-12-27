@@ -5,11 +5,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Twitter Scraper</title>
   <script src="/socket.io/socket.io.js"></script> <!-- Include Socket.IO -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      background-color: #f4f4f9;
+    }
+    h1 {
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      margin: 0;
+    }
+    button {
+      margin: 20px;
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #result {
+      margin: 20px auto;
+      max-width: 600px;
+      background: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      padding: 20px;
+      text-align: left;
+    }
+    #logs {
+      margin: 20px auto;
+      max-width: 600px;
+      text-align: left;
+    }
+    #logList {
+      padding: 0;
+      list-style-type: none;
+    }
+    #logList li {
+      background: #e9ecef;
+      margin: 5px 0;
+      padding: 10px;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
   <h1>Twitter Trending Topics Scraper</h1>
   <button onclick="runScraper()">Run Script</button>
-  <p id="result"></p>
+  <div id="result"></div>
   <div id="logs">
     <h3>Logs</h3>
     <ul id="logList"></ul>
@@ -27,9 +78,29 @@
     });
 
     async function runScraper() {
-      const response = await fetch('/run-scrapper');
-      const result = await response.text();
-      document.getElementById('result').textContent = result;
+      try {
+        const response = await fetch('/run-scrapper');
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        const data = await response.json();
+        
+        // Display the data
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = `
+          <h2>Scraped Data</h2>
+          <p><strong>ID:</strong> ${data._id || 'N/A'}</p>
+          <p><strong>Timestamp:</strong> ${data.timestamp || 'N/A'}</p>
+          <ul>
+            ${Object.keys(data).filter(key => key.startsWith('trend')).map(key => `
+              <li><strong>${key}:</strong> ${data[key] || 'N/A'}</li>
+            `).join('')}
+          </ul>
+        `;
+      } catch (error) {
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+      }
     }
   </script>
 </body>
