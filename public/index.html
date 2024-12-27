@@ -4,13 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Twitter Scraper</title>
+  <script src="/socket.io/socket.io.js"></script> <!-- Include Socket.IO -->
 </head>
 <body>
   <h1>Twitter Trending Topics Scraper</h1>
   <button onclick="runScraper()">Run Script</button>
   <p id="result"></p>
+  <div id="logs">
+    <h3>Logs</h3>
+    <ul id="logList"></ul>
+  </div>
 
   <script>
+    const socket = io();  // Connect to the server
+    
+    // Listen for log messages from the server
+    socket.on('log', (message) => {
+      const logList = document.getElementById('logList');
+      const logItem = document.createElement('li');
+      logItem.textContent = message;
+      logList.appendChild(logItem);
+    });
+
     async function runScraper() {
       const response = await fetch('/run-scrapper');
       const result = await response.text();
@@ -19,4 +34,3 @@
   </script>
 </body>
 </html>
-

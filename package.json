@@ -16,6 +16,7 @@
     "mongodb": "^6.12.0",
     "mongoose": "^8.9.2",
     "selenium-webdriver": "^4.27.0",
+    "socket.io": "^4.8.1",
     "stirtech": "file:",
     "uuid": "^11.0.3"
   }
