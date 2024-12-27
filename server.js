@@ -91,14 +91,14 @@ async function runScraper(io) {
         await driver.get('https://x.com/login');
 
         // Enter username
-        const usernameField = await driver.wait(until.elementLocated(By.name("text")), 10000);
+        const usernameField = await driver.wait(until.elementLocated(By.xpath("/html/body/div/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/div/div[4]/label/div/div[2]/div/input")), 10000);
         await usernameField.sendKeys(process.env.TWITTER_USERNAME, '\n');
         await io.emit('log', 'Entered username');
 
         // Wait for password field
         await sleep(3000);
 
-        const passwordField = await driver.wait(until.elementLocated(By.name("password")), 10000);
+        const passwordField = await driver.wait(until.elementLocated(By.xpath("/html/body/div/div/div/div[1]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div/div[3]/div/label/div/div[2]/div[1]/input")), 10000);
         await passwordField.sendKeys(process.env.TWITTER_PASSWORD, '\n');
         await io.emit('log', 'Entered password');
 
