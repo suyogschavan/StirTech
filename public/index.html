@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Twitter Scraper</title>
+</head>
+<body>
+  <h1>Twitter Trending Topics Scraper</h1>
+  <button onclick="runScraper()">Run Script</button>
+  <p id="result"></p>
+
+  <script>
+    async function runScraper() {
+      const response = await fetch('/run-scrapper');
+      const result = await response.text();
+      document.getElementById('result').textContent = result;
+    }
+  </script>
+</body>
+</html>

@@ -9,7 +9,9 @@
   "author": "suyog",
   "license": "ISC",
   "dependencies": {
+    "child-process": "^1.0.2",
     "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "mongodb": "^6.12.0",
     "mongoose": "^8.9.2",
     "selenium-webdriver": "^4.27.0",
