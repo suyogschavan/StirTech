@@ -26,7 +26,7 @@ async function runScraper(io) {
 
     async function scrollToBottom(driver) {
         await driver.executeScript("window.scrollTo(0, document.body.scrollHeight)");
-        await driver.sleep(1000);  
+        await driver.sleep(3000);  
     }
 
     const options = new chrome.Options();
@@ -44,7 +44,7 @@ async function runScraper(io) {
         await io.emit('log', 'On login page ');
 
         // Enter username
-        const usernameField = await driver.wait(until.elementLocated(By.name("text")), 10000);
+        const usernameField = await driver.wait(until.elementLocated(By.name("text")), 20000);
         await usernameField.sendKeys(process.env.TWITTER_USERNAME, '\n');
         await io.emit('log', 'Entered username');
 
@@ -84,7 +84,7 @@ async function runScraper(io) {
         for (let i = 2; i < 20; i++) {
             try {
                 const trendXPath = `/html/body/div[1]/div/div/div[2]/main/div/div/div/div[1]/div/div[3]/div/section/div/div/div[${i}]/div/div/div/div/div[2]/span`;
-                const trendElement = await driver.wait(until.elementLocated(By.xpath(trendXPath)), 2000);
+                const trendElement = await driver.wait(until.elementLocated(By.xpath(trendXPath)), 3000);
                 const trendText = await trendElement.getText();
                 trendsText.push(trendText);
             } catch (err) {
