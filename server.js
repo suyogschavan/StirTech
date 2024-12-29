@@ -8,6 +8,7 @@ const proxy = require('selenium-webdriver/proxy');
 const socketIo = require('socket.io');
 const Records = require('./models/Record'); 
 const http = require('http');
+const path = require('path');
 
 dotenv.config();
 
@@ -152,7 +153,8 @@ async function runScraper(io) {
 
 app.get('/', (req, res) => {
     // res.send('Server is running!');
-    res.send('./public/index.html');
+    // res.send('./public/index.html');
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Endpoint to trigger scraper
