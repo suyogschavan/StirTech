@@ -50,7 +50,7 @@ async function runScraper(io) {
     }
 
     const options = new chrome.Options()
-    .setProxy(proxyOptions);
+    // .setProxy(proxyOptions);
     options.addArguments('--headless'); // Headless mode
     options.addArguments('--no-sandbox'); // Disable sandboxing
     options.addArguments('--disable-dev-shm-usage'); // Workaround for containers
