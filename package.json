@@ -10,6 +10,7 @@
   "author": "suyog",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.7.9",
     "child-process": "^1.0.2",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",

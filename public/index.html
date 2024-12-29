@@ -88,14 +88,15 @@
         // Display the data
         const resultDiv = document.getElementById('result');
         resultDiv.innerHTML = `
-          <h2>Scraped Data</h2>
-          <p><strong>ID:</strong> ${data._id || 'N/A'}</p>
-          <p><strong>Timestamp:</strong> ${data.timestamp || 'N/A'}</p>
+          <h3>These are the most happening topics as on ${data.timestamp}</h3>
           <ul>
             ${Object.keys(data).filter(key => key.startsWith('trend')).map(key => `
-              <li><strong>${key}:</strong> ${data[key] || 'N/A'}</li>
+            <li><strong>${key}:</strong> ${data[key] || 'N/A'}</li>
             `).join('')}
           </ul>
+          <p><strong>ID:</strong> ${data._id || 'N/A'}</p>
+          <p>The IP address used for this query was : ${data.ip}</p>
+          <p>Here's a JSON extract of this record from the MongoDB : ${data}</p>
         `;
       } catch (error) {
         const resultDiv = document.getElementById('result');
