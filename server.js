@@ -151,11 +151,11 @@ async function runScraper(io) {
     }
 }
 
-app.get('/', (req, res) => {
-    // res.send('Server is running!');
-    // res.send('./public/index.html');
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+// app.get('/', (req, res) => {
+//     // res.send('Server is running!');
+//     // res.send('./public/index.html');
+//     res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// });
 
 // Endpoint to trigger scraper
 app.get('/run-scrapper', async (req, res) => {
