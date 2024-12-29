@@ -150,6 +150,10 @@ async function runScraper(io) {
     }
 }
 
+app.get('/', (req, res) => {
+    res.send('Server is running!');
+});
+
 // Endpoint to trigger scraper
 app.get('/run-scrapper', async (req, res) => {
     // Emit log message to client
